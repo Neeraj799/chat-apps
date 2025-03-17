@@ -17,8 +17,8 @@ export const SocketContextProvider = ({ children }) => {
   useEffect(() => {
     if (session?.user) {
       console.log("data", session.user);
-
-      const socket = io("http://localhost:4800", {
+      ``;
+      const socket = io(`${process.env.NEXT_PUBLIC_URL}`, {
         query: { userId: session.user.id },
       });
 
