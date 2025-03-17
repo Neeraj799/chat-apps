@@ -26,18 +26,21 @@ const useSignup = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${NEXT_PUBLIC_URL}/api/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName,
-          username,
-          email,
-          password,
-          confirmPassword,
-          gender,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/auth/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName,
+            username,
+            email,
+            password,
+            confirmPassword,
+            gender,
+          }),
+        }
+      );
 
       const data = await res.json();
 

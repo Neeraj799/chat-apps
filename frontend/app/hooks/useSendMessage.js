@@ -13,7 +13,7 @@ const useSendMessage = () => {
 
     try {
       const res = await fetch(
-        `${NEXT_PUBLIC_URL}/api/message/send/${selectedConversation._id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/message/send/${selectedConversation._id}`,
         {
           method: "POST",
           headers: {
