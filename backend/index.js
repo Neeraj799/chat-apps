@@ -26,7 +26,14 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow only frontend origin
+    credentials: true, // Allow cookies & authentication headers
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+  })
+);
 app.use(express.static("public"));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));

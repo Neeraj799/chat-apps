@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 
 const getUsersForSidebar = async (req, res) => {
   try {
-    const loggedInUser = req.user._id;
+    const loggedInUser = req.user.userId;
 
     const filteredUser = await User.find({
       _id: { $ne: loggedInUser },
