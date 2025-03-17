@@ -23,7 +23,6 @@ const page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(inputs);
-    toast.success("Signup successfully");
   };
 
   return (
@@ -92,7 +91,7 @@ const page = () => {
                 </span>
               </label>
               <input
-                type="text"
+                type="passsword"
                 placeholder="Password"
                 className="input input-primary bg-white"
                 value={inputs.password}

@@ -59,7 +59,7 @@ const Login = () => {
                   </span>
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Enter your password"
                   className="input input-primary bg-white"
                   value={password}

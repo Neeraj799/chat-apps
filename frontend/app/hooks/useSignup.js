@@ -38,14 +38,32 @@ const useSignup = () => {
           gender,
         }),
       });
+
       const data = await res.json();
-      console.log(data);
+
+      if (!res.ok) {
+        if (res.status === 403 && data.error && Array.isArray(data.error)) {
+          // If multiple validation errors exist, show each one separately
+          data.error.forEach((err) => {
+            if (err.message) {
+              toast.error(err.message);
+            }
+          });
+        } else {
+          // Handle single error message
+          toast.error(data.error || "Signup failed");
+        }
+        throw new Error("Signup failed");
+      }
+
+      toast.success("User signed up successfully!");
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
+
   return { loading, signup };
 };
 
@@ -59,18 +77,27 @@ function handleInputErrors({
   confirmPassword,
   gender,
 }) {
-  if ((!fullName, !username, !email, !password, !confirmPassword, !gender)) {
+  if (
+    !fullName ||
+    !username ||
+    !email ||
+    !password ||
+    !confirmPassword ||
+    !gender
+  ) {
     toast.error("Please fill all fields");
     return false;
   }
 
   if (password !== confirmPassword) {
-    toast.error("Password do not match");
+    toast.error("Passwords do not match");
     return false;
   }
 
   if (password.length < 6) {
-    toast.error("password must be atleast 6 characters");
+    toast.error("Password must be at least 6 characters long");
     return false;
   }
+
+  return true;
 }

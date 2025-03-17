@@ -4,10 +4,8 @@ import React from "react";
 
 const Message = ({ message }) => {
   const { data: session } = useSession();
-  console.log("Session Data:", session);
+
   const { selectedConversation } = useConversation();
-  console.log("Session Data:", session);
-  console.log("Session User Profile Pic:", session?.user?.profilePic);
 
   if (!session?.user) return null;
   const fromMe = message.senderId === session.user.id;

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "./Providers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SocketContext, SocketContextProvider } from "./context/socketContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <SocketContextProvider>{children}</SocketContextProvider>
+        </Providers>
         <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>

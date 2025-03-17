@@ -2,9 +2,21 @@ import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import envConfig from "../config/envConfig.js";
+import {
+  userLoginValidation,
+  userSignUpValidation,
+} from "../helpers/authValidation.js";
 
 const signup = async (req, res) => {
   try {
+    const { error } = userSignUpValidation.validate(req.body, {
+      abortEarly: false,
+    });
+
+    if (error) {
+      console.log(error);
+      return res.status(403).json({ error: error.details });
+    }
     const { fullName, username, email, password, confirmPassword, gender } =
       req.body;
 
@@ -50,6 +62,15 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    const { error } = userLoginValidation.validate(req.body, {
+      abortEarly: false,
+    });
+
+    if (error) {
+      console.log(error);
+      return res.status(403).json({ error: error.details });
+    }
+
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -76,7 +97,7 @@ const login = async (req, res) => {
       token,
       email,
       id: user._id,
-      name: user.name,
+      name: user.fullName,
       profilePic: user.profilePic,
     });
   } catch (err) {
