@@ -2,6 +2,7 @@
 import useConversation from "@/zustand/useConversation";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const useGetMessages = () => {
   const { data: session, status } = useSession();
@@ -13,7 +14,7 @@ const useGetMessages = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:4800/api/message/${selectedConversation._id}`,
+          `${process.env.NEXT_PUBLIC_URL}/api/message/${selectedConversation._id}`,
           {
             method: "GET",
             headers: {

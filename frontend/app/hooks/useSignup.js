@@ -26,7 +26,7 @@ const useSignup = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4800/api/auth/signup", {
+      const res = await fetch(`${NEXT_PUBLIC_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,14 +43,12 @@ const useSignup = () => {
 
       if (!res.ok) {
         if (res.status === 403 && data.error && Array.isArray(data.error)) {
-          // If multiple validation errors exist, show each one separately
           data.error.forEach((err) => {
             if (err.message) {
               toast.error(err.message);
             }
           });
         } else {
-          // Handle single error message
           toast.error(data.error || "Signup failed");
         }
         throw new Error("Signup failed");
