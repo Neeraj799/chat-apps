@@ -21,15 +21,15 @@ export const authOptions = {
             }
           );
 
+          const data = await res.json();
+
           if (!res.ok) {
-            throw new Error("Invalid email or password");
+            throw new Error(data.message || "Invalid email or password");
           }
 
-          const user = await res.json();
-
-          return user;
+          return data;
         } catch (error) {
-          throw new Error(error.message);
+          throw new Error(error.message || "Something went wrong");
         }
       },
     }),
@@ -37,7 +37,7 @@ export const authOptions = {
 
   callbacks: {
     async session({ session, token }) {
-      if (token.user) {
+      if (token?.user) {
         session.user = token.user;
         session.user.id = token.id;
         session.user.token = token.user.token;
@@ -50,10 +50,10 @@ export const authOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token.id = user?.id;
         token.user = user;
-        token.profilePic = user.profilePic;
-        token.name = user.name;
+        token.profilePic = user?.profilePic;
+        token.name = user?.name;
       }
       return token;
     },

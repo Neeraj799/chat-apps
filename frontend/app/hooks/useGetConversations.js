@@ -8,6 +8,9 @@ const useGetConversations = () => {
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
+    if (status !== "authenticated" || !session?.user?.token) {
+      return;
+    }
     const getConversations = async () => {
       setLoading(true);
 

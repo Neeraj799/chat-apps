@@ -9,12 +9,14 @@ const Conversations = () => {
 
   return (
     <div className="py-2 flex flex-col overflow-auto">
-      {conversations?.map((conversation) => (
-        <Conversation key={conversation._id} conversation={conversation} />
-      ))}
-      {loading ? (
-        <span className="loading loading-spinner mx-auto"></span>
-      ) : null}
+      {conversations.length > 0
+        ? conversations?.map((conversation) => (
+            <Conversation key={conversation._id} conversation={conversation} />
+          ))
+        : !loading && (
+            <p className="text-center text-gray-500">No conversations found</p>
+          )}
+      {loading && <span className="loading loading-spinner mx-auto"></span>}
     </div>
   );
 };

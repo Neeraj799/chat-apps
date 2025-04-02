@@ -8,7 +8,7 @@ const Message = ({ message }) => {
   const { selectedConversation } = useConversation();
 
   if (!session?.user) return null;
-  const fromMe = message.senderId === session.user.id;
+  const fromMe = message.senderId === session?.user.id;
   const chatClassName = fromMe ? "chat-end" : "chat-start";
   const profilePic = fromMe
     ? session?.user?.profilePic
